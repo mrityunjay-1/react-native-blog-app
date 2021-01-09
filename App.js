@@ -1,21 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import IndexScreen from './src/screens/IndexScreen';
+import { BlogProvider } from './src/context/BlogContext';
+import BlogScreen from './src/screens/BlogScreen';
+import CreateBlogScreen from './src/screens/CreateBlogScreen';
+import EditBlogScreen from './src/screens/EditBlogScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const navigation = createStackNavigator(
+    {
+        Index: IndexScreen,
+        Blog: BlogScreen,
+        CreateBlog: CreateBlogScreen,
+        EditBlog: EditBlogScreen
+    },
+    {
+        initialRouteName: "Index",
+        defaultNavigationOptions: {
+            title: "Blog App - Mrityunjay"
+        }
+    }
+);
+
+const App = createAppContainer(navigation);
+
+// here Whatever the App JSX data that is become children for the BlogProvider Component
+export default () => {
+    return (
+        <BlogProvider>
+            <App />
+        </BlogProvider>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
